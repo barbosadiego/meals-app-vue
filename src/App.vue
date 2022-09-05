@@ -42,7 +42,42 @@ export default {
   --red-dark: #842029;
   --green-light: #d1e7dd;
   --green-dark: #0f5132;
+
+  --borderRadius: 0.25rem;
+  --letterSpacing: 1px;
+  --transition: 0.3s ease-in-out all;
+  --max-width: 1120px;
+  --fixed-width: 600px;
+  --view-width: 90vw;
+  --shadow-1: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-3: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-4: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
-#app {
+
+*{
+  box-sizing: border-box;
+}
+
+body, p, h1, h2, li, ul{
+  padding: 0px;
+  margin: 0px;
+}
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+}
+
+.btn{
+  cursor: pointer;
+  border: transparent;
+  border-radius: var(--borderRadius);
+  padding: .375rem .75rem;
+  font-family: inherit;
+  text-transform: capitalize;
+  letter-spacing: var(--letterSpacing);
+  background-color: var(--primary-200);
+  color: var(--primary-500);
 }
 </style>
