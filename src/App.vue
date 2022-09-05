@@ -3,7 +3,7 @@
     <main>
       <TopBar />
       <Favorites />
-
+      <Meals />
     </main>
   </div>
 </template>
@@ -11,12 +11,14 @@
 <script>
 import TopBar from '@/components/TopBar.vue';
 import Favorites from '@/components/Favorites.vue';
+import Meals from '@/components/Meals.vue';
 
 export default {
   name: 'App',
   components: {
     TopBar,
     Favorites,
+    Meals,
   },
 };
 </script>
@@ -71,7 +73,7 @@ body, p, h1, h2, li, ul{
 }
 
 body{
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1rem;
 }
 
@@ -93,6 +95,18 @@ body{
   margin: 0 auto;
   @media screen and (min-width:768px) {
     padding: 1.5rem 2rem;
+  }
+}
+
+#app{
+  main{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    .meals{
+      flex: 1;
+    }
   }
 }
 </style>

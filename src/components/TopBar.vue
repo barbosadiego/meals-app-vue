@@ -43,6 +43,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  width: 100%;
 
   &__search {
     input {

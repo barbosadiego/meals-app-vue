@@ -23,6 +23,7 @@ export default {
     font-size: rem(20);
     text-transform: capitalize;
     color: var(--white);
+    letter-spacing: var(--letterSpacing);
   }
 }
 </style>
