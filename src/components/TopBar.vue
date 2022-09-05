@@ -1,5 +1,5 @@
 <template>
-  <div class="top-bar container">
+  <header class="top-bar container">
     <form class="top-bar__search">
       <input
         type="text"
@@ -17,7 +17,7 @@
       </button>
     </form>
     <button class="btn top-bar__surprise-btn">surprise me!</button>
-  </div>
+  </header>
 </template>
 
 <script>

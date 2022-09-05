@@ -1,9 +1,9 @@
 <template>
-  <div class="favorites">
+  <section class="favorites">
     <div class="container">
       <h1>favorites</h1>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

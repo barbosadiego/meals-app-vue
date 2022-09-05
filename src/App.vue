@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <TopBar />
-    <Favorites />
+    <main>
+      <TopBar />
+      <Favorites />
+
+    </main>
   </div>
 </template>
 
