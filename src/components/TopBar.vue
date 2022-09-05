@@ -1,5 +1,5 @@
 <template>
-  <div class="top-bar">
+  <div class="top-bar container">
     <form class="top-bar__search">
       <input
         type="text"
@@ -43,7 +43,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  padding: 1.5rem 2rem;
 
   &__search {
     input {
@@ -78,7 +77,7 @@ export default {
 
   &__surprise-btn {
     transition: .3s;
-
+    
     &:hover {
       background-color: var(--grey-800);
       color: var(--white);

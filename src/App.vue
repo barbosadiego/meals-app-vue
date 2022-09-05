@@ -1,16 +1,19 @@
 <template>
   <div id="app">
     <TopBar />
+    <Favorites />
   </div>
 </template>
 
 <script>
-import TopBar from '@/components/TopBar.vue'
+import TopBar from '@/components/TopBar.vue';
+import Favorites from '@/components/Favorites.vue';
 
 export default {
   name: 'App',
   components: {
     TopBar,
+    Favorites,
   },
 };
 </script>
@@ -79,5 +82,14 @@ body{
   letter-spacing: var(--letterSpacing);
   background-color: var(--primary-200);
   color: var(--primary-500);
+}
+
+.container{
+  padding: 1rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  @media screen and (min-width:768px) {
+    padding: 1.5rem 2rem;
+  }
 }
 </style>
