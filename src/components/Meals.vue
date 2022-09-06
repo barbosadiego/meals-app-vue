@@ -1,5 +1,6 @@
 <template>
   <section class="meals">
+    <Modal />
     <div class="container meals__grid">
       <div class="meals__item" v-for="item in mealData" :key="item.idMeal">
         <img :src="item.strMealThumb" :alt="item.strMeal" />
@@ -28,6 +29,8 @@
 </template>
 
 <script>
+import Modal from '@/components/Modal.vue';
+
 export default {
   name: 'MealsComponent',
   data() {
@@ -35,6 +38,9 @@ export default {
       mealData: [],
       isError: false,
     };
+  },
+  components:{
+    Modal,
   },
   methods: {
     async getMeals() {
@@ -66,11 +72,6 @@ export default {
 .meals {
   background-color: var(--grey-100);
   padding-top: 2rem;
-
-  img {
-    max-width: 100%;
-    display: block;
-  }
 
   &__grid {
     display: grid;

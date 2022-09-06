@@ -29,7 +29,6 @@ export default {
     addItem(item) {
       this.favorites.unshift(item);
       localStorage.setItem('favorites-meals', JSON.stringify(this.favorites));
-      console.log(this.favorites);
     },
     removeItem(item) {
       this.favorites = this.favorites.filter(
@@ -108,6 +107,11 @@ ul {
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1rem;
+}
+
+img{
+  max-width: 100%;
+  display: block;
 }
 
 .btn {
