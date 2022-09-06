@@ -5,7 +5,7 @@
         <img :src="item.strMealThumb" :alt="item.strMeal" />
         <div class="meals__description">
           <p>{{ item.strMeal }}</p>
-          <button class="like">
+          <button class="like" @click="$emit('addItem', item)" >
             <svg
               stroke="currentColor"
               fill="#000000"
@@ -22,6 +22,7 @@
           </button>
         </div>
       </div>
+      <p v-if="isError">Ops, something was wrong...</p>
     </div>
   </section>
 </template>
@@ -32,6 +33,7 @@ export default {
   data() {
     return {
       mealData: [],
+      isError: false,
     };
   },
   methods: {
@@ -43,13 +45,16 @@ export default {
         const response = await data.json();
         if (response.meals) {
           this.mealData = response.meals;
+        } else {
+          console.log(data);
+          this.isError = true;
         }
       } catch (error) {
         console.log(error);
       }
     },
   },
-  created() {
+  mounted() {
     this.getMeals();
   },
 };
