@@ -3,9 +3,10 @@
     <div class="container">
       <h1>favorites</h1>
       <div class="favorites__grid">
-        <div class="favorites__meal"
-          v-for="item in favorites"
-          :key="item.idMeal"
+        <div
+          class="favorites__meal"
+          v-for="(item, index) in favorites"
+          :key="item.idMeal + index"
         >
           <img
             class="favorites__icon"
@@ -20,15 +21,9 @@
 </template>
 
 <script>
-
 export default {
   name: 'FavoritesComponent',
-  data() {
-    return {
-      favoritesArray: [],
-    };
-  },
-  props:{
+  props: {
     favorites: Array,
   },
 };

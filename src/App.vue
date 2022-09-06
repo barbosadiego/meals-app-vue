@@ -27,12 +27,15 @@ export default {
   },
   methods: {
     addItem(item) {
-      this.favorites.push(item);
+      this.favorites.unshift(item);
       localStorage.setItem('favorites-meals', JSON.stringify(this.favorites));
+      console.log(this.favorites);
     },
     removeItem(item) {
-      this.favorites = this.favorites.filter((meal) => meal.idMeal !== item.idMeal)
-      localStorage.setItem('favorites-meals', JSON.stringify(this.favorites))
+      this.favorites = this.favorites.filter(
+        (meal) => meal.idMeal !== item.idMeal,
+      );
+      localStorage.setItem('favorites-meals', JSON.stringify(this.favorites));
     },
     getItemStorage() {
       const meals = JSON.parse(localStorage.getItem('favorites-meals')) ?? [];
