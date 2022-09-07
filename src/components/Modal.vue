@@ -1,7 +1,7 @@
 <template>
-  <div class="modal" v-if="isModalActive">
+  <div class="modal">
     <div class="modal__info">
-      <button class="close-btn" @click="close">close</button>
+      <button class="close-btn" @click="$emit('close')">close</button>
       <img
         class="modal__img"
         data-v-54776de0=""
@@ -26,10 +26,12 @@
 <script>
 export default {
   name: 'ModalComponent',
+  props: {
+    idMeal: String,
+  },
   data() {
     return {
       mealData: [],
-      isModalActive: true,
       ingredients: [],
       measures: [],
       instructions: [],
@@ -39,7 +41,7 @@ export default {
     async getMealData() {
       try {
         const data = await fetch(
-          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772`,
+          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${this.idMeal}`,
         );
         const response = await data.json();
         if (data.ok) {
@@ -65,10 +67,6 @@ export default {
       for (let i = 0; i <= size; i++) {
         this.instructions.push(`${this.ingredients[i]} - ${this.measures[i]}`);
       }
-    },
-    close() {
-      this.isModalActive = !this.isModalActive;
-      console.log('modal active: ' + '' + this.isModalActive);
     },
   },
   computed: {},

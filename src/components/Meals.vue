@@ -1,12 +1,21 @@
 <template>
   <section class="meals">
-    <Modal />
+    <Modal
+      :idMeal="idMeal"
+      v-if="isModalActive"
+      @close="isModalActive = false"
+    />
     <div class="container meals__grid">
-      <div class="meals__item" v-for="item in mealData" :key="item.idMeal">
+      <div
+        class="meals__item"
+        v-for="item in mealData"
+        :key="item.idMeal"
+        @click="handleMealItemClick(item.idMeal)"
+      >
         <img :src="item.strMealThumb" :alt="item.strMeal" />
         <div class="meals__description">
           <p>{{ item.strMeal }}</p>
-          <button class="like" @click="$emit('addItem', item)" >
+          <button class="like" @click="$emit('addItem', item)">
             <svg
               stroke="currentColor"
               fill="#000000"
@@ -37,9 +46,11 @@ export default {
     return {
       mealData: [],
       isError: false,
+      isModalActive: false,
+      idMeal: null,
     };
   },
-  components:{
+  components: {
     Modal,
   },
   methods: {
@@ -58,6 +69,10 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    handleMealItemClick(id) {
+      this.idMeal = id;
+      this.isModalActive = true;
     },
   },
   mounted() {
@@ -85,6 +100,7 @@ export default {
   }
 
   &__item {
+    cursor: pointer;
     background-color: var(--white);
     border-radius: var(--borderRadius);
     overflow: hidden;
