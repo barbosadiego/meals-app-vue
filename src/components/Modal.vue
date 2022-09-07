@@ -1,20 +1,19 @@
 <template>
   <div class="modal">
     <div class="modal__info">
+      <button class="close-btn">close</button>
       <img
         class="modal__img"
         data-v-54776de0=""
-        src="https://www.themealdb.com/images/media/meals/ursuup1487348423.jpg"
-        alt="Beef Brisket Pot Roast"
+        :src="mealData[0].strMealThumb"
+        :alt="mealData[0].strMeal"
       />
-      <h1>Title</h1>
       <div class="modal__description">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex cupiditate
-          quidem autem, alias ullam ipsum nesciunt eveniet omnis vel.
-          Accusantium quisquam, vitae praesentium fugit sed obcaecati
-          perspiciatis corrupti consequatur labore.
-        </p>
+        <h1>{{ mealData[0].strMeal }}</h1>
+        <h2>Cooking instructions:</h2>
+        <p>{{ mealData[0].strInstructions }}</p>
+        <h3>Ingredients and measures</h3>
+        <div class="measures" v-html="ingredientsAndMeasures"></div>
       </div>
     </div>
   </div>
@@ -23,17 +22,63 @@
 <script>
 export default {
   name: 'ModalComponent',
+  data() {
+    return {
+      mealData: [],
+      isModalActive: false,
+      ingredients: [],
+      measures: [],
+      instructions: [],
+    };
+  },
+  methods: {
+    async getMealData() {
+      try {
+        const data = await fetch(
+          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772`,
+        );
+        const response = await data.json();
+        if (data.ok) {
+          this.mealData = response.meals;
+          for (let i = 0; i <= 20; i++) {
+            if (this.mealData[0][`strIngredient${i}`]) {
+              this.ingredients.push(this.mealData[0][`strIngredient${i}`]);
+            }
+            if (this.mealData[0][`strMeasure${i}`]) {
+              this.measures.push(this.mealData[0][`strMeasure${i}`]);
+            }
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+  computed: {
+    ingredientsAndMeasures() {
+      const data = this.ingredients.map(
+        (item, index) => `<p>${item} - ${this.measures[index]}</p>`,
+      );
+      const res = data.join('');
+      return res;
+    },
+  },
+  created() {
+    this.getMealData();
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+@import '@/Functions.scss';
+
 .modal {
   position: fixed;
   z-index: 10;
   top: 0;
+  bottom: 0;
   left: 0;
   width: 100%;
-  min-height: 100vh;
   background-color: transparentize($color: #000000, $amount: 0.1);
   overflow-y: auto;
   display: flex;
@@ -41,44 +86,78 @@ export default {
 
   &__info {
     max-width: 900px;
+    overflow-y: auto;
     margin: 0 auto;
     background-color: var(--white);
     display: grid;
+    justify-items: start;
     grid-template-columns: 1fr;
     gap: 2rem;
     margin: 1rem;
     padding: 1.3rem;
-    // border-radius: var(--borderRadius);
+    // padding-top: 2rem;
     @media screen and (min-width: 768px) {
       background-color: unset;
       background-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 30%, white 30%);
       grid-template-columns: 250px 1fr;
-      grid-template-rows: 300px 40px 1fr;
+      grid-template-rows: 30px 1fr;
       margin: 3rem;
-      padding: 1rem;
+      padding: 1rem 2rem;
+    }
+    @media screen and (min-width: 880px) {
+      grid-template-columns: 320px 1fr;
     }
 
-    h1{
-      // align-self: end;
-      @media screen and (min-width:768px) {
+    .close-btn {
+      cursor: pointer;
+      border: none;
+      text-transform: uppercase;
+      background-color: var(--red-dark);
+      color: var(--white);
+      padding: 0.5rem 1rem;
+      border-radius: var(--borderRadius);
+      @media screen and (min-width: 768px) {
         grid-column: 2/3;
+        // grid-row: 1;
+        align-self: start;
+        justify-self: end;
       }
     }
-    
   }
+
 
   &__img {
     border-radius: var(--borderRadius);
     @media screen and (min-width: 768px) {
-      grid-column: 1/-1;
+      position: fixed;
+      grid-column: 1/2;
+      grid-row: 2;
       height: 300px;
-      width: 100%;
+      width: 250px;
       object-fit: cover;
       object-position: top left;
+    }
+     @media screen and (min-width: 880px) {
+      width: 300px;
     }
   }
 
   &__description {
+    h1,
+    h2,
+    h3,
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    h1 {
+      font-size: rem(25);
+      @media screen and (min-width: 768px) {
+        font-size: rem(40);
+      }
+    }
+
     @media screen and (min-width: 768px) {
       grid-column: 2/3;
     }
