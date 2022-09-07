@@ -1,7 +1,7 @@
 <template>
-  <div class="modal">
+  <div class="modal" v-if="isModalActive">
     <div class="modal__info">
-      <button class="close-btn">close</button>
+      <button class="close-btn" @click="close">close</button>
       <img
         class="modal__img"
         data-v-54776de0=""
@@ -13,7 +13,11 @@
         <h2>Cooking instructions:</h2>
         <p>{{ mealData[0].strInstructions }}</p>
         <h3>Ingredients and measures</h3>
-        <div class="measures" v-html="ingredientsAndMeasures"></div>
+        <div class="modal__measures">
+          <p v-for="(item, index) in instructions" :key="index">
+            {{ item }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -25,7 +29,7 @@ export default {
   data() {
     return {
       mealData: [],
-      isModalActive: false,
+      isModalActive: true,
       ingredients: [],
       measures: [],
       instructions: [],
@@ -40,6 +44,7 @@ export default {
         const response = await data.json();
         if (data.ok) {
           this.mealData = response.meals;
+
           for (let i = 0; i <= 20; i++) {
             if (this.mealData[0][`strIngredient${i}`]) {
               this.ingredients.push(this.mealData[0][`strIngredient${i}`]);
@@ -48,21 +53,25 @@ export default {
               this.measures.push(this.mealData[0][`strMeasure${i}`]);
             }
           }
+
+          this.ingredientsAndMeasures();
         }
       } catch (error) {
         console.log(error);
       }
     },
-  },
-  computed: {
     ingredientsAndMeasures() {
-      const data = this.ingredients.map(
-        (item, index) => `<p>${item} - ${this.measures[index]}</p>`,
-      );
-      const res = data.join('');
-      return res;
+      const size = this.ingredients.length - 1;
+      for (let i = 0; i <= size; i++) {
+        this.instructions.push(`${this.ingredients[i]} - ${this.measures[i]}`);
+      }
+    },
+    close() {
+      this.isModalActive = !this.isModalActive;
+      console.log('modal active: ' + '' + this.isModalActive);
     },
   },
+  computed: {},
   created() {
     this.getMealData();
   },
@@ -125,6 +134,11 @@ export default {
     }
   }
 
+  &__measures {
+    p {
+      text-transform: capitalize;
+    }
+  }
 
   &__img {
     border-radius: var(--borderRadius);
@@ -137,7 +151,7 @@ export default {
       object-fit: cover;
       object-position: top left;
     }
-     @media screen and (min-width: 880px) {
+    @media screen and (min-width: 880px) {
       width: 300px;
     }
   }
@@ -153,6 +167,7 @@ export default {
 
     h1 {
       font-size: rem(25);
+      line-height: 1.2;
       @media screen and (min-width: 768px) {
         font-size: rem(40);
       }
