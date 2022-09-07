@@ -69,7 +69,6 @@ export default {
       }
     },
   },
-  computed: {},
   created() {
     this.getMealData();
   },

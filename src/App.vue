@@ -1,9 +1,18 @@
 <template>
   <div id="app">
     <main>
+      <Modal
+        :idMeal="idMeal"
+        v-if="isModalActive"
+        @close="isModalActive = false"
+      />
       <TopBar />
-      <Favorites :favorites="favorites" @removeItem="removeItem" />
-      <Meals @addItem="addItem" />
+      <Favorites
+        :favorites="favorites"
+        @removeItem="removeItem"
+        @mealItem="handleMeal"
+      />
+      <Meals @addItem="addItem" @mealItem="handleMeal" />
     </main>
   </div>
 </template>
@@ -12,6 +21,7 @@
 import TopBar from '@/components/TopBar.vue';
 import Favorites from '@/components/Favorites.vue';
 import Meals from '@/components/Meals.vue';
+import Modal from '@/components/Modal.vue';
 
 export default {
   name: 'App',
@@ -19,13 +29,21 @@ export default {
     TopBar,
     Favorites,
     Meals,
+    Modal,
   },
   data() {
     return {
       favorites: [],
+      isModalActive: false,
+      idMeal: null,
     };
   },
   methods: {
+    handleMeal(id) {
+      console.log(id);
+      this.idMeal = id;
+      this.isModalActive = true;
+    },
     addItem(item) {
       this.favorites.unshift(item);
       localStorage.setItem('favorites-meals', JSON.stringify(this.favorites));
@@ -109,7 +127,7 @@ body {
   font-size: 1rem;
 }
 
-img{
+img {
   max-width: 100%;
   display: block;
 }

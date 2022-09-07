@@ -7,6 +7,7 @@
           class="favorites__meal"
           v-for="(item, index) in favorites"
           :key="item.idMeal + index"
+          @click="$emit('mealItem', item.idMeal)"
         >
           <img
             class="favorites__icon"
@@ -65,6 +66,7 @@ export default {
   }
 
   &__meal {
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     gap: 1rem;
