@@ -1,5 +1,5 @@
 <template>
-  <div class="modal">
+  <div class="modal" @click="handleClick">
     <div class="modal__info">
       <button class="close-btn" @click="$emit('close')">close</button>
       <img
@@ -67,6 +67,11 @@ export default {
       for (let i = 0; i <= size; i++) {
         this.instructions.push(`${this.ingredients[i]} - ${this.measures[i]}`);
       }
+    },
+    handleClick({ target, currentTarget }) {
+      // console.log(target);
+      // console.log(currentTarget);
+      target === currentTarget ? this.$emit('close') : false;
     },
   },
   created() {
