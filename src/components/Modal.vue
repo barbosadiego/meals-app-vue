@@ -140,11 +140,10 @@ export default {
       color: var(--white);
       padding: 0.5rem 1rem;
       border-radius: var(--borderRadius);
+      justify-self: end;
       @media screen and (min-width: 768px) {
         grid-column: 2/3;
-        // grid-row: 1;
         align-self: start;
-        justify-self: end;
       }
     }
   }
