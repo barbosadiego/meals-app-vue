@@ -1,6 +1,6 @@
 <template>
-  <div class="message">
-    <p>{{ msg }}</p>
+  <div class="message" :class="{'alert' : msg.alert}">
+    <p>{{ msg.message }}</p>
   </div>
 </template>
 
@@ -8,8 +8,8 @@
 export default {
   name: 'SystemMessage',
   props:{
-    msg: String,
-  }
+    msg: Object,
+  },
 }
 </script>
 
@@ -27,8 +27,12 @@ export default {
   padding: 1rem;
   border-radius: var(--borderRadius);
   color: var(--green-dark);
-  // box-shadow: var(--shadow-2);
   box-shadow: 0px 0px 0px 2px var(--green-dark);
+  &.alert{
+    background-color: var(--red-light);
+    color: var(--red-dark);
+    box-shadow: 0px 0px 0px 2px var(--red-dark);
+  }
   //tablet and desktop
   @media screen and (min-width: 768px) {
     width: unset;

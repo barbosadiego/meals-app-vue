@@ -8,7 +8,7 @@
         @close="isModalActive = false"
       />
       <transition>
-        <SystemMessage v-if="msg" :msg="msg"/>
+        <SystemMessage v-if="msg.active" :msg="msg"/>
       </transition>
       <Favorites
         :favorites="favorites"
@@ -41,7 +41,7 @@ export default {
       favorites: [],
       isModalActive: false,
       idMeal: null,
-      msg: '',
+      msg: {message: '', alert: false, active: false},
       savedIds: [],
     };
   },
@@ -55,11 +55,9 @@ export default {
         this.savedIds.push(item.idMeal)
         this.favorites.unshift(item);
         localStorage.setItem('favorites-meals', JSON.stringify(this.favorites));
-        this.msg = 'Item added!'
-        this.clearMessage();
+        this.sendMessage('Item added!')
       } else {
-        this.msg = 'This recipe has already been include!';
-        this.clearMessage();
+        this.sendMessage('This recipe has already been include!', true)
       }
     },
     removeItem(item) {
@@ -72,9 +70,17 @@ export default {
       const meals = JSON.parse(localStorage.getItem('favorites-meals')) ?? [];
       return meals;
     },
+    sendMessage(text, type){
+      this.msg.active = true;
+      this.msg.message = text;
+      this.msg.alert = type || false;
+      this.clearMessage()
+    },
     clearMessage(){
       setTimeout(() => {
-        this.msg = ''
+        this.msg.active = false;
+        this.msg.alert = false;
+        this.msg.message = '';
       }, 1500)
     },
     loadMealsId(){
