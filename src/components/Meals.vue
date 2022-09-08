@@ -1,6 +1,7 @@
 <template>
   <section class="meals">
-    <div class="container meals__grid">
+    <Loading v-if="isLoading"/>
+    <div v-else class="container meals__grid">
       <div class="meals__item" v-for="item in mealData" :key="item.idMeal">
         <img
           :src="item.strMealThumb"
@@ -32,17 +33,24 @@
 </template>
 
 <script>
+import Loading from '@/components/Loading.vue';
+
 export default {
   name: 'MealsComponent',
+  components:{
+    Loading,
+  },
   data() {
     return {
       mealData: [],
       isError: false,
       idMeal: null,
+      isLoading: false,
     };
   },
   methods: {
     async getMeals() {
+      this.isLoading = true;
       try {
         const data = await fetch(
           'https://www.themealdb.com/api/json/v1/1/filter.php?a=American',
@@ -56,6 +64,8 @@ export default {
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        this.isLoading = false;
       }
     },
   },
@@ -70,7 +80,8 @@ export default {
 
 .meals {
   background-color: var(--grey-100);
-  padding-top: 2rem;
+  // padding-top: 2rem;
+  position: relative;
 
   &__grid {
     display: grid;
