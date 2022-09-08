@@ -1,6 +1,10 @@
 <template>
+
   <div class="modal" @click="handleClick">
-    <div class="modal__info">
+
+    <Loading v-if="isLoading"/>
+
+    <div v-else class="modal__info">
       <button class="close-btn" @click="$emit('close')">close</button>
       <img
         class="modal__img"
@@ -20,12 +24,19 @@
         </div>
       </div>
     </div>
+
   </div>
+
 </template>
 
 <script>
+import Loading from '@/components/Loading.vue';
+
 export default {
   name: 'ModalComponent',
+  components:{
+    Loading,
+  },
   props: {
     idMeal: String,
   },
@@ -35,10 +46,12 @@ export default {
       ingredients: [],
       measures: [],
       instructions: [],
+      isLoading: true,
     };
   },
   methods: {
     async getMealData() {
+      this.isLoading = true;
       try {
         const data = await fetch(
           `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${this.idMeal}`,
@@ -60,6 +73,8 @@ export default {
         }
       } catch (error) {
         console.log(error);
+      } finally{
+        this.isLoading = false;
       }
     },
     ingredientsAndMeasures() {
