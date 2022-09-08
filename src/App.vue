@@ -42,6 +42,7 @@ export default {
       isModalActive: false,
       idMeal: null,
       msg: '',
+      savedIds: [],
     };
   },
   methods: {
@@ -50,10 +51,16 @@ export default {
       this.isModalActive = true;
     },
     addItem(item) {
-      this.favorites.unshift(item);
-      localStorage.setItem('favorites-meals', JSON.stringify(this.favorites));
-      this.msg = 'Item added!'
-      this.clearMessage();
+      if(!this.savedIds.includes(item.idMeal)){
+        this.savedIds.push(item.idMeal)
+        this.favorites.unshift(item);
+        localStorage.setItem('favorites-meals', JSON.stringify(this.favorites));
+        this.msg = 'Item added!'
+        this.clearMessage();
+      } else {
+        this.msg = 'This recipe has already been include!';
+        this.clearMessage();
+      }
     },
     removeItem(item) {
       this.favorites = this.favorites.filter(
@@ -69,10 +76,15 @@ export default {
       setTimeout(() => {
         this.msg = ''
       }, 1500)
+    },
+    loadMealsId(){
+      const data = this.getItemStorage()
+      data.forEach((item) => this.savedIds.push(item.idMeal))
     }
   },
   mounted() {
     this.favorites = this.getItemStorage();
+    this.loadMealsId()
   },
 };
 </script>
