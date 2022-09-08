@@ -10,7 +10,9 @@
         />
         <div class="meals__description">
           <p>{{ item.strMeal }}</p>
-          <button class="like" @click="$emit('addItem', item)">
+          <button class="like"
+            @click="$emit('addItem', item)"
+          >
             <svg
               stroke="currentColor"
               fill="#000000"
@@ -139,6 +141,9 @@ export default {
       border: none;
       padding: 0px;
       margin: 0px;
+      &:active{
+        transform: scale(1.9) rotate(-25deg);
+      }
 
       svg {
         transition: 0.3s;
@@ -147,9 +152,6 @@ export default {
       &:hover {
         svg {
           fill: var(--red-dark);
-        }
-        @media screen and (min-width: 1025px) {
-          transform: translateY(-5px);
         }
       }
     }
