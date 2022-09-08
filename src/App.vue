@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <main :class="{ modalActive: isModalActive }">
+    <main>
       <Modal
         :idMeal="idMeal"
         v-if="isModalActive"
@@ -157,14 +157,6 @@ img {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-
-    &.modalActive {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-    }
 
     .meals {
       flex: 1;

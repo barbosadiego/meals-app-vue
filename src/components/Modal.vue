@@ -69,8 +69,6 @@ export default {
       }
     },
     handleClick({ target, currentTarget }) {
-      // console.log(target);
-      // console.log(currentTarget);
       target === currentTarget ? this.$emit('close') : false;
     },
   },
