@@ -69,7 +69,7 @@ export default {
       }
     },
     handleClick({ target, currentTarget }) {
-      target === currentTarget ? this.$emit('close') : false;
+      return target === currentTarget ? this.$emit('close') : false;
     },
   },
   created() {
