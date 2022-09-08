@@ -87,6 +87,10 @@ export default {
       background-color: var(--grey-800);
       color: var(--white);
     }
+
+    &:active{
+      box-shadow: 0px 0px 0px 4px var(--grey-400);
+    }
   }
 }
 </style>
