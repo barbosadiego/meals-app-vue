@@ -1,12 +1,15 @@
 <template>
   <div id="app">
     <main>
+      <TopBar />
       <Modal
         :idMeal="idMeal"
         v-if="isModalActive"
         @close="isModalActive = false"
       />
-      <TopBar />
+      <transition>
+        <SystemMessage v-if="msg" :msg="msg"/>
+      </transition>
       <Favorites
         :favorites="favorites"
         @removeItem="removeItem"
@@ -22,6 +25,7 @@ import TopBar from '@/components/TopBar.vue';
 import Favorites from '@/components/Favorites.vue';
 import Meals from '@/components/Meals.vue';
 import Modal from '@/components/Modal.vue';
+import SystemMessage from '@/components/SystemMessage.vue';
 
 export default {
   name: 'App',
@@ -30,12 +34,14 @@ export default {
     Favorites,
     Meals,
     Modal,
+    SystemMessage,
   },
   data() {
     return {
       favorites: [],
       isModalActive: false,
       idMeal: null,
+      msg: '',
     };
   },
   methods: {
@@ -46,6 +52,8 @@ export default {
     addItem(item) {
       this.favorites.unshift(item);
       localStorage.setItem('favorites-meals', JSON.stringify(this.favorites));
+      this.msg = 'Item added!'
+      this.clearMessage();
     },
     removeItem(item) {
       this.favorites = this.favorites.filter(
@@ -57,6 +65,11 @@ export default {
       const meals = JSON.parse(localStorage.getItem('favorites-meals')) ?? [];
       return meals;
     },
+    clearMessage(){
+      setTimeout(() => {
+        this.msg = ''
+      }, 1500)
+    }
   },
   mounted() {
     this.favorites = this.getItemStorage();
@@ -150,6 +163,16 @@ img {
   @media screen and (min-width: 768px) {
     padding: 1.5rem 2rem;
   }
+}
+
+.v-enter-active,
+.v-leave-active{
+  transition: opacity .3s;
+}
+
+.v-enter,
+.v-leave-to{
+  opacity: 0;
 }
 
 #app {
