@@ -16,7 +16,11 @@
         search
       </button>
     </form>
-    <button class="btn top-bar__surprise-btn">surprise me!</button>
+    <button class="btn top-bar__surprise-btn"
+      @click="$emit('initSurprise')"
+    >
+      surprise me!
+    </button>
   </header>
 </template>
 

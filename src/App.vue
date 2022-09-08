@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <main>
-      <TopBar />
+      <TopBar @initSurprise="initSurprise"/>
       <Modal
         :idMeal="idMeal"
         v-if="isModalActive"
@@ -46,6 +46,18 @@ export default {
     };
   },
   methods: {
+    async initSurprise(){
+      try {
+        const data = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
+        const response = await data.json();
+
+        this.isModalActive = true;
+        this.idMeal = response.meals[0].idMeal
+        
+      } catch (error) {
+        console.log(error)
+      }
+    },
     handleMeal(id) {
       this.idMeal = id;
       this.isModalActive = true;
@@ -70,10 +82,10 @@ export default {
       const meals = JSON.parse(localStorage.getItem('favorites-meals')) ?? [];
       return meals;
     },
-    sendMessage(text, type){
+    sendMessage(text, alert){
       this.msg.active = true;
       this.msg.message = text;
-      this.msg.alert = type || false;
+      this.msg.alert = alert || false;
       this.clearMessage()
     },
     clearMessage(){
