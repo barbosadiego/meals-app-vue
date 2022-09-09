@@ -34,7 +34,10 @@
         </div>
       </div>
     </div>
-    <p v-else class="mealsSearch__error">{{ errorMsg }}</p>
+    <p v-else class="mealsSearch__error">
+      {{ errorMsg }}
+      <a href="/">Back to Home</a>
+    </p>
   </section>
 </template>
 
@@ -181,6 +184,13 @@ export default {
     margin-top: 5vh;
     font-size: rem(30);
     font-weight: bold;
+
+    a{
+      display: block;
+      margin-top: 50px;
+      font-size: rem(20);
+      // text-decoration: none;
+    }
   }
 }
 </style>
