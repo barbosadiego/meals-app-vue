@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <main>
-      <TopBar @initSurprise="initSurprise"/>
+      <TopBar @initSurprise="initSurprise" @activeSearch="handleSearch"/>
       <Modal
         :idMeal="idMeal"
         v-if="isModalActive"
@@ -16,7 +16,8 @@
         @removeItem="removeItem"
         @mealItem="handleMeal"
       />
-      <Meals @addItem="addItem" @mealItem="handleMeal" />
+      <Meals v-if="!isSearching" @addItem="addItem" @mealItem="handleMeal" />
+      <MealsSearch v-else :searchItem="searchItem"/>
     </main>
   </div>
 </template>
@@ -27,6 +28,7 @@ import Favorites from '@/components/Favorites.vue';
 import Meals from '@/components/Meals.vue';
 import Modal from '@/components/Modal.vue';
 import SystemMessage from '@/components/SystemMessage.vue';
+import MealsSearch from '@/components/MealsSearch.vue';
 
 export default {
   name: 'App',
@@ -36,6 +38,7 @@ export default {
     Meals,
     Modal,
     SystemMessage,
+    MealsSearch,
   },
   data() {
     return {
@@ -44,9 +47,16 @@ export default {
       idMeal: null,
       msg: {message: '', alert: false, active: false},
       savedIds: [],
+      isSearching: false,
+      searchItem: '',
     };
   },
   methods: {
+    handleSearch(item){
+      console.log(item);
+      this.isSearching = !this.isSearching;
+      this.searchItem = item;
+    },
     async initSurprise(){
       try {
         const data = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
@@ -212,7 +222,7 @@ img {
     flex-direction: column;
     min-height: 100vh;
 
-    .meals {
+    .meals, .mealsSearch {
       flex: 1;
     }
   }

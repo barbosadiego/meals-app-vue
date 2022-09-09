@@ -11,7 +11,7 @@
       <button
         class="btn top-bar__search-btn"
         type="submit"
-        @click.prevent="handleSearch"
+        @click.prevent="$emit('activeSearch', meal)"
       >
         search
       </button>
@@ -31,11 +31,6 @@ export default {
     return {
       meal: '',
     };
-  },
-  methods: {
-    handleSearch() {
-      console.log('search');
-    },
   },
 };
 </script>
