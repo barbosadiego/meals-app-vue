@@ -61,6 +61,9 @@ export default {
       &::-webkit-scrollbar-thumb {
         background-color: lighten($color: #222, $amount: 20%);
         border-radius: 3px;
+        &:hover{
+          background-color: lighten($color: #222, $amount: 40%);
+        }
       }
     }
   }
