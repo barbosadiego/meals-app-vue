@@ -17,7 +17,7 @@
         @mealItem="handleMeal"
       />
       <Meals v-if="!isSearching" @addItem="addItem" @mealItem="handleMeal" />
-      <MealsSearch v-else :searchItem="searchItem"/>
+      <MealsSearch v-else :searchItem="searchItem" @addItem="addItem" @mealItem="handleMeal"/>
     </main>
   </div>
 </template>
@@ -53,8 +53,7 @@ export default {
   },
   methods: {
     handleSearch(item){
-      console.log(item);
-      this.isSearching = !this.isSearching;
+      this.isSearching = true;
       this.searchItem = item;
     },
     async initSurprise(){
