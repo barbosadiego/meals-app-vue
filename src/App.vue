@@ -6,6 +6,7 @@
         :idMeal="idMeal"
         v-if="isModalActive"
         @close="isModalActive = false"
+        @addItem="addItem"
       />
       <transition>
         <SystemMessage v-if="msg.active" :msg="msg"/>
