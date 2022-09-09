@@ -16,8 +16,11 @@
         @removeItem="removeItem"
         @mealItem="handleMeal"
       />
-      <Meals v-if="!isSearching" @addItem="addItem" @mealItem="handleMeal" />
-      <MealsSearch v-else :searchItem="searchItem" @addItem="addItem" @mealItem="handleMeal"/>
+      <transition>
+        <Meals v-if="!isSearching" @addItem="addItem" @mealItem="handleMeal" />
+
+        <MealsSearch v-else :searchItem="searchItem" @addItem="addItem" @mealItem="handleMeal"/>
+      </transition>
     </main>
   </div>
 </template>

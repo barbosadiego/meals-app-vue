@@ -62,6 +62,7 @@ export default {
     async getMeals() {
       this.isError = false;
       this.isLoading = true;
+      if(!this.searchItem.length) return this.sendError('Please insert a meal for search!')
       try {
         const data = await fetch(
           `https://www.themealdb.com/api/json/v1/1/search.php?s=${this.searchItem}`,
@@ -71,7 +72,7 @@ export default {
           this.isError = false;
           this.mealData = response.meals;
         } else {
-          this.sendError(`Not found results for: ${this.searchItem}`)
+          this.sendError(`Not found results for: "${this.searchItem}"`)
         }
       } catch (error) {
         console.log(error);
